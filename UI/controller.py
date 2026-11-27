@@ -16,4 +16,26 @@ class Controller:
         * Numero di Collegamenti
         * Lista di Collegamenti che superano l'importo indicato come soglia
         """
-        # TODO
+        valore = self._view.importo_medio_minimo.value
+        try:
+            valore=float(valore)
+        except ValueError:
+            self._view.show_alert("Inserire un valore numerico")
+            return
+
+        self._model.costruisci_grafo(valore)
+
+        nodi=self._model.get_num_nodes()
+        collegamenti=self._model.get_num_edges()
+
+        self._view.lista_visualizzazione.controls.clear()
+        # self._view._lst_results.controls.append(ft.Text(f"{self._model.grafo}"))
+        self._view.lista_visualizzazione.controls.append(
+            ft.Text(f"Numero di Filiali: {nodi}\nNumero di collegamenti {collegamenti}"))
+
+
+        for arco in self._model.get_all_edges():
+            arco_in_testo=ft.Text(arco)
+            self._view.lista_visualizzazione.controls.append(arco_in_testo)
+
+        self._view.update()

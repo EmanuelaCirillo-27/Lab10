@@ -33,7 +33,9 @@ class DAO:
             try:
 
                 query = """SELECT LEAST(id_filiale_origine,id_filiale_destinazione) as origine,
-                                    GREATEST(id_filiale_origine,id_filiale_destinazione) as arrivo, AVG(importo) as media
+                                    GREATEST(id_filiale_origine,id_filiale_destinazione) as arrivo,
+                                    SUM(importo) AS somma,
+                                    COUNT(*) AS conteggio
                                     FROM bonifico
                                     GROUP BY origine,arrivo"""
                 cursor.execute(query)
